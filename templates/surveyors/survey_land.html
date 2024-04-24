@@ -1,0 +1,36 @@
+<!-- templates/surveyors/survey_land.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-4">Survey Land</h1>
+        <p class="text-gray-700 mb-4">Please review the details of the land at {{ land.location }}:</p>
+        
+        <!-- Display land details -->
+        <div class="bg-gray-100 rounded p-4 mb-4">
+            <p><strong>Location:</strong> {{ land.location }}</p>
+            <p><strong>Description:</strong> {{ land.description }}</p>
+            <p><strong>Size:</strong> {{ land.size }} sqm</p>
+            <p><strong>Price:</strong> ${{ land.price }}</p>
+            <!-- Add more details as needed -->
+        </div>
+
+        <!-- Survey confirmation form -->
+        <form method="post">
+            {% csrf_token %}
+            <p class="text-gray-700 mb-4">Do the details of this land match what you have surveyed?</p>
+            <label for="details_match_true">
+                <input type="radio" id="details_match_true" name="details_match" value="True" required>
+                Yes, the details match
+            </label>
+            <label for="details_match_false">
+                <input type="radio" id="details_match_false" name="details_match" value="False" required>
+                No, the details don't match
+            </label>
+            <button type="submit" class="bg-gradient-to-r from-yellow-400 to-red-500 hover:bg-gradient-to-r hover:from-yellow-600 hover:to-red-700 text-white font-bold py-2 px-4 rounded">Confirm Survey 🛠️</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+<!-- templates/history/user_history.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-4">User History</h1>
+    <table class="table-auto w-full">
+        <thead>
+            <tr>
+                <th class="px-4 py-2">User</th>
+                <th class="px-4 py-2">Roles</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user_history in user_histories %}
+            <tr>
+                <td class="border px-4 py-2">
+                    <!-- Link to view user profile with button styling -->
+                    <a href="{% url 'user_profile' user_history.user.id %}" class="block bg-gradient-to-r from-yellow-400 to-red-500 hover:from-yellow-500 hover:to-red-600 text-white font-semibold py-2 px-4 rounded-md shadow-md transition-colors duration-300 text-center">
+                        {{ user_history.user }}
+                    </a>
+                </td>
+                <td class="text-center border px-4 py-2">{{ user_history.get_roles }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+<!-- lands/land_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-4">{{ land.location }}</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <!-- Display images -->
+                {% if land.images %}
+                    {% if land.images.count > 1 %}
+                        <!-- Display multiple images -->
+                        <div class="grid grid-cols-2 gap-4">
+                            {% for image in land.images.all %}
+                                <img src="{{ image.url }}" alt="{{ land.location }}" class="w-full h-auto">
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <!-- Display single image -->
+                        <img src="{{ land.images.url }}" alt="{{ land.location }}" class="w-full h-auto">
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div>
+                <p class="text-gray-700">{{ land.description }}</p>
+                <p class="text-sm text-gray-600">Size: {{ land.size }} sqm</p>
+                <p class="text-sm text-gray-600">Price: ${{ land.price }}</p>
+                <p class="text-sm font-bold text-gray-600">Ownership Status: {% if land.ownership_status %}Confirmed{% else %}Not Confirmed{% endif %}</p>
+                <p class="text-sm font-bold text-gray-600">Confirmation Status: {% if land.confirmation_status %}Confirmed{% else %}Not Confirmed{% endif %}</p>
+                <p class="text-sm text-gray-600">Owner: {{ land.owner.username }}</p>
+                <!-- Conditional buttons based on user roles -->
+                {% if request.user.is_authenticated %}
+                    {% if request.user.surveyor %}
+                        <!-- Show survey button for surveyors -->
+                        {% if not land.confirmation_status and not land.surveyed %} <!-- Check if land is not confirmed and not surveyed -->
+                            <a href="{% url 'survey_land' land.id %}" class="bg-gradient-to-r from-yellow-400 to-red-500 hover:bg-gradient-to-r hover:from-yellow-600 hover:to-red-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block">Survey Land 🛠️</a>
+                        {% else %}
+                            <button disabled class="bg-gray-400 text-white font-bold py-2 px-4 rounded mt-4 inline-block cursor-not-allowed">Survey Land 🛠️</button>
+                        {% endif %}
+                    {% endif %}
+                    {% if request.user.buyer %}
+                        <!-- Show buy button for buyers -->
+                        <a href="{% url 'buy_land' land.id %}" class="bg-gradient-to-r from-green-400 to-blue-500 hover:bg-gradient-to-r hover:from-green-500 hover:to-blue-600 text-white font-bold py-2 px-4 rounded mt-4 inline-block">Buy Land 🏡</a>
+                    {% endif %}
+                {% endif %}
+                <!-- Add more details as needed -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

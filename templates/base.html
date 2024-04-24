@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Tor Real Estate{% endblock %}</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+    <style>
+        html {
+            min-height: 100%;
+            position: relative;
+        }
+        
+        body {
+            margin: 0;
+            padding-bottom: 80px; /* Height of the footer */
+        }
+        
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 80px; /* Height of the footer */
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+  
+    </style>
+</head>
+
+<body class="bg-gradient-to-r from-gray-400 to-gray-500">
+    <!-- Navigation Bar -->
+    {% include "chunks/main_nav.html" %}
+
+    <!-- Page Content -->
+    <div class="container mx-auto p-4">
+        {% block content %}
+        <!-- Default content goes here -->
+        {% endblock %}
+    </div>
+
+    
+    <!-- Footer -->
+    {% include "chunks/footer.html" %}
+
+    <!-- Include dropdown.js -->
+    <script src="{% static 'js/dropdown.js' %}"></script>
+
+    <!-- Optional: Add extra CSS or scripts -->
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

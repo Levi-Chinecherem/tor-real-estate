@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-4">Profile</h1>
+    
+    <div class="flex flex-col lg:flex-row items-center lg:items-start">
+        <!-- Image Section -->
+        <div class="lg:w-1/4 mb-4 lg:mb-0">
+            {% if is_seller %}
+                {% if user.seller.profile_image %}
+                    <img src="{{ user.seller.profile_image.url }}" alt="Profile Image" class="w-40 h-40 object-cover rounded-full">
+                {% else %}
+                    <p>No profile image uploaded.</p>
+                {% endif %}
+            {% elif is_surveyor %}
+                {% if user.surveyor.image %}
+                    <img src="{{ user.surveyor.image.url }}" alt="Surveyor Image" class="w-40 h-40 object-cover rounded-full">
+                {% else %}
+                    <p>No image uploaded.</p>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <!-- Details Section -->
+        <div class="lg:w-3/4">
+            {% if is_seller %}
+                <div class="mb-4">
+                    <h3 class="text-lg font-bold mb-2">Seller Information</h3>
+                    <p><strong>Full Name:</strong> {{ user.seller.full_name }}</p>
+                    <p><strong>House Address:</strong> {{ user.seller.house_address }}</p>
+                    <p><strong>State:</strong> {{ user.seller.state }}</p>
+                    <p><strong>Phone Number:</strong> {{ user.seller.phone_number }}</p>
+                    <p><strong>Agreement Accepted:</strong> {% if user.seller.agreement_accepted %}Yes{% else %}No{% endif %}</p>
+                </div>
+            {% elif is_buyer %}
+                <div class="mb-4">
+                    <h3 class="text-lg font-bold mb-2">Buyer Information</h3>
+                    <p><strong>Full Name:</strong> {{ user.buyer.full_name }}</p>
+                    <p><strong>House Address:</strong> {{ user.buyer.house_address }}</p>
+                    <p><strong>State:</strong> {{ user.buyer.state }}</p>
+                    <p><strong>Phone Number:</strong> {{ user.buyer.phone_number }}</p>
+                </div>
+            {% elif is_surveyor %}
+                <div class="mb-4">
+                    <h3 class="text-lg font-bold mb-2">Surveyor Information</h3>
+                    <p><strong>Full Name:</strong> {{ user.surveyor.full_name }}</p>
+                    <p><strong>House Address:</strong> {{ user.surveyor.house_address }}</p>
+                    <p><strong>State:</strong> {{ user.surveyor.state }}</p>
+                    <p><strong>Phone Number:</strong> {{ user.surveyor.phone_number }}</p>
+                    <p><strong>Resume:</strong> {% if user.surveyor.resume %}<a href="{{ user.surveyor.resume.url }}">Download Resume</a>{% else %}No resume uploaded.{% endif %}</p>
+                    <p><strong>Potential Seller:</strong> {% if user.surveyor.is_potential_seller %}Yes{% else %}No{% endif %}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Link to Edit Profile -->
+    <a href="{% url 'password_change' %}" class="text-blue-500">Change Password</a>
+</div>
+{% endblock %}

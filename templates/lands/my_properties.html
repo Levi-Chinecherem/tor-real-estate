@@ -1,0 +1,29 @@
+<!-- templates/lands/my_properties.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-4">My Properties</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for land in my_lands %}
+        <div class="rounded-lg shadow-lg bg-white overflow-hidden">
+            <!-- Display land details -->
+            <img src="{{ land.images.url }}" alt="{{ land.location }}" class="w-full h-40 object-cover">
+            <div class="p-4">
+                <h2 class="text-lg font-bold">{{ land.location }}</h2>
+                <p class="text-gray-700">{{ land.description }}</p>
+                <p class="text-sm text-gray-600">Size: {{ land.size }} sqm</p>
+                <p class="text-sm text-gray-600">Price: ${{ land.price }}</p>
+                <!-- Add more details as needed -->
+            </div>
+            <!-- Buttons -->
+            <div class="bg-gray-100 px-4 py-2 flex justify-between items-center">
+                <a href="{% url 'land_detail' land.id %}" class="text-purple-600 hover:underline">View Details</a>
+                <span class="text-gray-600">🏷️</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

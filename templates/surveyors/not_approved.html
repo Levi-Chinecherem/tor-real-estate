@@ -1,0 +1,22 @@
+<!-- templates/surveyors/not_approved.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 flex justify-center items-center h-screen">
+    <div class="max-w-lg bg-white shadow-md rounded-md px-8 py-6">
+        <h1 class="text-3xl font-bold mb-4 text-center text-gray-800">Surveyor Not Approved</h1>
+        <p class="text-gray-700 mb-4 text-center">Sorry, your request to become a surveyor has not been approved for the following reasons:</p>
+        <ul class="list-disc pl-6 mb-4">
+            <li class="text-gray-700">Seller cannot be a surveyor to prevent fraud.</li>
+            <li class="text-gray-700">Network delay may have affected the approval process.</li>
+            <li class="text-gray-700">Administrative workload may be high, causing delays.</li>
+            <!-- Add more reasons if needed -->
+        </ul>
+        <p class="text-gray-700 mb-4 text-center">Please contact the admin for further information.</p>
+        <div class="text-center">
+            <a href="{% url 'index' %}" class="text-blue-500 hover:underline">Back to Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

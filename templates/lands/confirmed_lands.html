@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-4">Confirmed Lands</h1>
+
+    <!-- Filter Section -->
+    {% comment %} <div class="flex items-center justify-between mb-6">
+        <div class="w-1/3">
+            <input type="text" placeholder="Location" class="border border-gray-300 rounded px-4 py-2 w-full">
+        </div>
+        <div class="w-1/3 ml-4">
+            <input type="text" placeholder="Size (sqm)" class="border border-gray-300 rounded px-4 py-2 w-full">
+        </div>
+        <div class="w-1/3 ml-4">
+            <input type="text" placeholder="Price ($)" class="border border-gray-300 rounded px-4 py-2 w-full">
+        </div>
+    </div> {% endcomment %}
+
+    <!-- Lands Listing -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {% for land in lands %}
+        <a href="{% url 'land_detail' land_id=land.id %}" class="block rounded-lg shadow-lg bg-white overflow-hidden hover:shadow-xl transition duration-300">
+            <!-- Display only the first image -->
+            <img src="{{ land.images.url }}" alt="{{ land.location }}" class="w-full h-48 object-cover">
+
+            <!-- Land Details -->
+            <div class="p-4">
+                <h2 class="text-lg font-bold">{{ land.location }}</h2>
+                <p class="text-sm text-gray-600">{{ land.size }} sqm | ${{ land.price }}</p>
+                <p class="text-sm text-gray-700">{{ land.description }}</p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-8">
+        {% if lands.has_previous %}
+        <a href="?page=1" class="bg-blue-500 text-white px-4 py-2 rounded-l">First</a>
+        <a href="?page={{ lands.previous_page_number }}" class="bg-blue-500 text-white px-4 py-2">Previous</a>
+        {% endif %}
+        <span class="px-4 py-2">{{ lands.number }}</span>
+        <span class="px-4 py-2">of</span>
+        <span class="px-4 py-2">{{ lands.paginator.num_pages }}</span>
+        {% if lands.has_next %}
+        <a href="?page={{ lands.next_page_number }}" class="bg-blue-500 text-white px-4 py-2">Next</a>
+        <a href="?page={{ lands.paginator.num_pages }}" class="bg-blue-500 text-white px-4 py-2 rounded-r">Last</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

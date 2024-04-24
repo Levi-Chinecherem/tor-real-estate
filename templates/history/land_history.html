@@ -1,0 +1,43 @@
+<!-- templates/history/land_history.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-4">Land History</h1>
+    <table class="table-auto w-full">
+        <thead>
+            <tr>
+                <th class="px-4 py-2">Land</th>
+                <th class="px-4 py-2">Action</th>
+                <th class="px-4 py-2">User</th>
+                <th class="px-4 py-2">Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for land_history in land_histories %}
+            <tr>
+                <td class="border px-4 py-2">
+                    <!-- Link to land detail view -->
+                    <a href="{% url 'land_detail' land_history.land.id %}" class="block bg-gradient-to-r from-yellow-400 to-red-500 hover:from-yellow-500 hover:to-red-600 text-white font-semibold py-2 px-4 rounded-md shadow-md transition-colors duration-300 text-center">
+                        {{ land_history.land }}
+                    </a>
+                </td>
+                <td class="border px-4 py-2 text-center">{{ land_history.action }}</td>
+                <td class="border px-4 py-2">
+                    {% if land_history.user %}
+                    <!-- Link to user profile view -->
+                    <a href="{% url 'user_profile' land_history.user.id %}" class="block bg-gradient-to-r from-yellow-400 to-red-500 hover:from-yellow-500 hover:to-red-600 text-white font-semibold py-2 px-4 rounded-md shadow-md transition-colors duration-300 text-center">
+                        {{ land_history.user }}
+                    </a>
+                    {% else %}
+                    <span class="text-gray-500">N/A</span>
+                    {% endif %}
+                </td>
+                <td class="border px-4 py-2 text-center">{{ land_history.timestamp }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
